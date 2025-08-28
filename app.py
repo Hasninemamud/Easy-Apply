@@ -337,3 +337,6 @@ def results():
 
 if __name__ == '__main__':
     app.run(debug=True)  # For development only
+
+# WSGI application for Vercel
+application = app
