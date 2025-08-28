@@ -1,0 +1,10 @@
+flask
+requests
+PyPDF2
+python-docx
+docx2txt
+beautifulsoup4
+lxml
+python-dotenv
+flask-limiter
+cryptography
