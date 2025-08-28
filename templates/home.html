@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyApply - AI-Powered Job Application Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -14,11 +13,21 @@
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out'
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         }
                     }
                 }
@@ -44,29 +53,84 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .dark .glass-effect {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+<body class="bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-effect transition-all duration-300">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-briefcase text-2xl text-purple-600 dark:text-purple-400"></i>
-                    <span class="text-xl font-bold text-gray-800 dark:text-white">EasyApply</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold gradient-text">EasyApply</h1>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-6">
-                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Features</a>
-                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">How it Works</a>
-                    <a href="#pricing" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Pricing</a>
-                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                        <i class="fas fa-moon dark:hidden text-gray-700"></i>
-                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 text-sm font-medium transition-colors">Features</a>
+                        <a href="#how-it-works" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 text-sm font-medium transition-colors">How it Works</a>
+                        <a href="#pricing" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
+                    </div>
+                </div>
+
+                <!-- Desktop Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
                     </button>
-                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors transform hover:scale-105">
+                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Theme Toggle -->
+                    <button id="mobile-theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <button id="mobile-menu-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path class="hamburger-line" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path class="close-line hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-16 right-0 w-64 h-screen bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 md:hidden">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#features" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 py-2 text-lg font-medium transition-colors">Features</a>
+                <a href="#how-it-works" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 py-2 text-lg font-medium transition-colors">How it Works</a>
+                <a href="#pricing" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 py-2 text-lg font-medium transition-colors">Pricing</a>
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
+                    <button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                         Get Started
                     </button>
                 </div>
@@ -75,89 +139,71 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-12 px-4">
-        <div class="container mx-auto">
-            <div class="flex flex-col lg:flex-row items-center justify-between">
-                <div class="lg:w-1/2 mb-12 lg:mb-0">
-                    <h1 class="text-4xl lg:text-6xl font-bold text-gray-800 dark:text-white mb-6">
-                        Land Your Dream Job with 
-                        <span class="gradient-text">AI-Powered</span> Applications
+    <section class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="text-center lg:text-left animate-fade-in">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        <span class="text-balance">Land Your Dream Job with</span>
+                        <span class="gradient-text block">AI-Powered Applications</span>
                     </h1>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                    <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 text-pretty max-w-2xl mx-auto lg:mx-0">
                         Upload your resume, paste the job description, and let AI craft personalized cover letters and professional emails that get you noticed.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ url_for('index_page') }}"><button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 hover:shadow-lg">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
                             Start Applying Now
-                            <i class="fas fa-arrow-right ml-2"></i>
-                        </button></a>
-                        <button class="border-2 border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all">
+                        </button>
+                        <button class="border-2 border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all">
                             Watch Demo
                         </button>
                     </div>
-                    <div class="mt-8 flex items-center space-x-6">
+                    <div class="mt-8 flex items-center justify-center lg:justify-start space-x-2">
                         <div class="flex -space-x-2">
-                            <img src="https://picsum.photos/seed/user1/40/40.jpg" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-900" alt="User">
-                            <img src="https://picsum.photos/seed/user2/40/40.jpg" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-900" alt="User">
-                            <img src="https://picsum.photos/seed/user3/40/40.jpg" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-900" alt="User">
-                            <img src="https://picsum.photos/seed/user4/40/40.jpg" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-900" alt="User">
+                            <div class="w-8 h-8 bg-purple-500 rounded-full border-2 border-white dark:border-black"></div>
+                            <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-white dark:border-black"></div>
+                            <div class="w-8 h-8 bg-green-500 rounded-full border-2 border-white dark:border-black"></div>
+                            <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-white dark:border-black"></div>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-300">
-                                <span class="font-semibold text-purple-600 dark:text-purple-400">10,000+</span> happy job seekers
-                            </p>
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
+                        <span class="text-gray-600 dark:text-gray-400 font-medium">10,000+ happy job seekers</span>
                     </div>
                 </div>
-                <div class="lg:w-1/2 relative">
-                    <div class="relative animate-float">
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 transform rotate-3">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+
+                <!-- Hero Visual -->
+                <div class="relative animate-float">
+                    <div class="glass-effect rounded-2xl p-6 max-w-md mx-auto">
+                        <div class="bg-white dark:bg-gray-900 rounded-lg p-4 mb-4 shadow-lg">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">EA</span>
                                 </div>
-                                <span class="text-sm text-gray-500 dark:text-gray-400">EasyApply</span>
+                                <span class="font-semibold">EasyApply</span>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3">
-                                    <i class="fas fa-file-alt text-purple-600 dark:text-purple-400 text-xl"></i>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Resume Uploaded</p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">john_doe_resume.pdf</p>
-                                    </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                                    <span class="text-sm">Resume Uploaded</span>
                                 </div>
-                                <div class="flex items-center space-x-3">
-                                    <i class="fab fa-linkedin text-blue-600 text-xl"></i>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Job Description</p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">Senior Software Engineer at Tech Corp</p>
-                                    </div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400 ml-6">john_doe_resume.pdf</div>
+                                
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                                    <span class="text-sm">Job Description</span>
                                 </div>
-                                <div class="border-t pt-4">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">AI Processing...</span>
-                                        <div class="w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                            <div class="w-3/4 h-full bg-gradient-to-r from-purple-600 to-purple-400 animate-pulse-slow"></div>
-                                        </div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400 ml-6">Senior Software Engineer at Tech Corp</div>
+                                
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 bg-yellow-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm">AI Processing...</span>
+                                </div>
+                                
+                                <div class="mt-4 space-y-2">
+                                    <div class="bg-purple-100 dark:bg-purple-900/30 p-2 rounded text-xs">
+                                        Cover Letter Generated
                                     </div>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center space-x-2">
-                                            <i class="fas fa-check-circle text-green-500"></i>
-                                            <span class="text-xs text-gray-600 dark:text-gray-400">Cover Letter Generated</span>
-                                        </div>
-                                        <div class="flex items-center space-x-2">
-                                            <i class="fas fa-check-circle text-green-500"></i>
-                                            <span class="text-xs text-gray-600 dark:text-gray-400">Email Drafted</span>
-                                        </div>
+                                    <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded text-xs">
+                                        Email Drafted
                                     </div>
                                 </div>
                             </div>
@@ -169,138 +215,124 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-16 px-4 bg-white dark:bg-gray-800">
-        <div class="container mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">
-                    Powerful Features for Job Seekers
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Powerful Features for Job Seekers</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-pretty">
                     Everything you need to create compelling job applications in minutes, not hours.
                 </p>
             </div>
+
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-robot text-2xl text-purple-600 dark:text-purple-400"></i>
+                <!-- Feature Cards -->
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">AI-Powered Writing</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Advanced AI analyzes your resume and job requirements to create personalized, professional content that stands out.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">AI-Powered Writing</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Advanced AI analyzes your resume and job requirements to create personalized, professional content that stands out.</p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-file-upload text-2xl text-blue-600 dark:text-blue-400"></i>
+
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Easy Upload</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Simply upload your resume and paste the job description or LinkedIn link. We handle the rest.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">Easy Upload</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Simply upload your resume and paste the job description or LinkedIn link. We handle the rest.</p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-envelope-open-text text-2xl text-green-600 dark:text-green-400"></i>
+
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Professional Emails</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Generate compelling email drafts that get your application noticed by hiring managers.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">Professional Emails</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Generate compelling email drafts that get your application noticed by hiring managers.</p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-pen-fancy text-2xl text-yellow-600 dark:text-yellow-400"></i>
+
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Custom Cover Letters</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Create tailored cover letters that highlight your relevant skills and match job requirements perfectly.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">Custom Cover Letters</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Create tailored cover letters that highlight your relevant skills and match job requirements perfectly.</p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-clock text-2xl text-red-600 dark:text-red-400"></i>
+
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Save Time</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        What used to take hours now takes minutes. Apply to more jobs with better quality applications.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">Save Time</h3>
+                    <p class="text-gray-600 dark:text-gray-400">What used to take hours now takes minutes. Apply to more jobs with better quality applications.</p>
                 </div>
-                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-2xl hover:shadow-xl transition-all transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-chart-line text-2xl text-indigo-600 dark:text-indigo-400"></i>
+
+                <div class="feature-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Higher Success Rate</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Our users report 3x more interview callbacks with AI-optimized applications.
-                    </p>
+                    <h3 class="text-xl font-semibold mb-3">Higher Success Rate</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Our users report 3x more interview callbacks with AI-optimized applications.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="py-16 px-4">
-        <div class="container mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-4">
-                    How EasyApply Works
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+    <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">How EasyApply Works</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-pretty">
                     Get professional job applications ready in just three simple steps.
                 </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+
+            <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <div class="relative">
-                        <div class="w-24 h-24 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl font-bold text-purple-600 dark:text-purple-400">1</span>
-                        </div>
-                        <div class="hidden md:block absolute top-12 -right-4 w-8 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Upload & Paste</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Upload your resume and paste the job description or LinkedIn job link.
-                    </p>
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+                    <h3 class="text-xl font-semibold mb-4">Upload & Paste</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Upload your resume and paste the job description or LinkedIn job link.</p>
                 </div>
+
                 <div class="text-center">
-                    <div class="relative">
-                        <div class="w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl font-bold text-blue-600 dark:text-blue-400">2</span>
-                        </div>
-                        <div class="hidden md:block absolute top-12 -right-4 w-8 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">AI Processing</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Our AI analyzes your skills and the job requirements to create tailored content.
-                    </p>
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+                    <h3 class="text-xl font-semibold mb-4">AI Processing</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Our AI analyzes your skills and the job requirements to create tailored content.</p>
                 </div>
+
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-3xl font-bold text-green-600 dark:text-green-400">3</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Apply & Succeed</h3>
-                    <p class="text-gray-600 dark:text-gray-300">
-                        Review and send your professional cover letter and email draft.
-                    </p>
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+                    <h3 class="text-xl font-semibold mb-4">Apply & Succeed</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Review and send your professional cover letter and email draft.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 px-4 bg-gradient-to-r from-purple-600 to-purple-800">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Ready to Land Your Dream Job?
-            </h2>
-            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-purple-600 to-blue-600">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Ready to Land Your Dream Job?</h2>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto text-pretty">
                 Join thousands of job seekers who are already getting more interviews with EasyApply.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105">
+                <button class="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
                     Start Free Trial
                 </button>
-                <button class="border-2 border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all">
+                <button class="border-2 border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all">
                     View Pricing
                 </button>
             </div>
@@ -308,66 +340,68 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 px-4">
-        <div class="container mx-auto">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-briefcase text-2xl text-purple-400"></i>
-                        <span class="text-xl font-bold">EasyApply</span>
-                    </div>
-                    <p class="text-gray-400">
+    <footer class="bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold gradient-text mb-4">EasyApply</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
                         AI-powered job application assistant that helps you land your dream job faster.
                     </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Product</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Templates</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">API</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Company</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">About</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Careers</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Connect</h4>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-                            <i class="fab fa-linkedin text-xl"></i>
+                        <a href="#" class="text-gray-400 hover:text-purple-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-                            <i class="fab fa-facebook text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-                            <i class="fab fa-instagram text-xl"></i>
+                        <a href="#" class="text-gray-400 hover:text-purple-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
+                            </svg>
                         </a>
                     </div>
-                    <p class="text-gray-400">
-                        Subscribe to our newsletter for job search tips.
-                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Features</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Templates</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">API</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">Contact</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 EasyApply. All rights reserved. | <a href="#" class="hover:text-purple-400 transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-purple-400 transition-colors">Terms of Service</a></p>
+
+            <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-600 dark:text-gray-400">
+                    &copy; 2024 EasyApply. All rights reserved. | 
+                    <a href="#" class="hover:text-purple-600 transition-colors">Privacy Policy</a> | 
+                    <a href="#" class="hover:text-purple-600 transition-colors">Terms of Service</a>
+                </p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Theme Toggle
+        // Theme Toggle Functionality
         const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
         const html = document.documentElement;
 
         // Check for saved theme preference or default to light
@@ -376,10 +410,43 @@
             html.classList.add('dark');
         }
 
-        themeToggle.addEventListener('click', () => {
+        function toggleTheme() {
             html.classList.toggle('dark');
             const theme = html.classList.contains('dark') ? 'dark' : 'light';
             localStorage.setItem('theme', theme);
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLine = mobileMenuToggle.querySelector('.hamburger-line');
+        const closeLine = mobileMenuToggle.querySelector('.close-line');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburgerLine.classList.toggle('hidden');
+            closeLine.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                hamburgerLine.classList.remove('hidden');
+                closeLine.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                hamburgerLine.classList.remove('hidden');
+                closeLine.classList.add('hidden');
+            }
         });
 
         // Smooth scrolling for navigation links
@@ -406,7 +473,7 @@
             }
         });
 
-        // Animate elements on scroll
+        // Animate feature cards on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -422,7 +489,7 @@
         }, observerOptions);
 
         // Observe all feature cards
-        document.querySelectorAll('.bg-gray-50.dark\\:bg-gray-700').forEach(card => {
+        document.querySelectorAll('.feature-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
