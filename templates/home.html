@@ -97,7 +97,7 @@
                             <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                    <a href="{% url 'index' %}"><button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    <a href="{{ url_for('index_page') }}"><button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         Get Started
                     </button></a>
                 </div>
@@ -130,7 +130,7 @@
                 <a href="#how-it-works" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 py-2 text-lg font-medium transition-colors">How it Works</a>
                 <a href="#pricing" class="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 py-2 text-lg font-medium transition-colors">Pricing</a>
                 <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
-                    <a href="{% url "index" %}"><button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    <a href="{{ url_for('index_page') }}"><button class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                         Get Started
                     </button></a>
                 </div>
@@ -152,7 +152,7 @@
                         Upload your resume, paste the job description, and let AI craft personalized cover letters and professional emails that get you noticed.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="{% url 'index' %}"><button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
+                        <a href="{{ url_for('index_page') }}"><button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
                             Start Applying Now
                         </button></a>
                         <button class="border-2 border-purple-600 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all">
@@ -329,7 +329,7 @@
                 Join thousands of job seekers who are already getting more interviews with EasyApply.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{% url "index" %}"><button class="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
+                <a href="{{ url_for('index_page') }}"><button class="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
                     Start Free Trial
                 </button></a>
                 <button class="border-2 border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all">
