@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Application Materials</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -11,171 +18,156 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2563eb',
-                        secondary: '#64748b',
-                        accent: '#0f172a',
+                        primary: '#059669',
+                        secondary: '#10b981',
+                        accent: '#065f46',
+                        neutral: '#374151',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
-    <!-- Added professional navbar -->
-    <nav class="bg-white shadow-sm border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <i class="fas fa-briefcase text-white text-sm"></i>
-                        </div>
-                        <span class="ml-3 text-xl font-bold text-accent">JobCraft</span>
+<body class="bg-gradient-to-br from-emerald-50 via-white to-teal-50 min-h-screen">
+    <!-- Minimalist header -->
+    <header class="bg-white/80 backdrop-blur-sm border-b border-emerald-100 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-accent">EasyApply</h1>
+                        <p class="text-xs text-neutral/70">AI-Powered Applications</p>
                     </div>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#" class="text-primary font-medium">Dashboard</a>
-                        <a href="#" class="text-secondary hover:text-accent transition-colors">Templates</a>
-                        <a href="#" class="text-secondary hover:text-accent transition-colors">History</a>
-                        <a href="#" class="text-secondary hover:text-accent transition-colors">Settings</a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button class="text-secondary hover:text-accent">
-                        <i class="fas fa-bars text-xl"></i>
+                <div class="flex items-center space-x-4">
+                    <button class="text-neutral/60 hover:text-primary transition-colors">
+                        <i class="fas fa-history text-lg"></i>
+                    </button>
+                    <button class="text-neutral/60 hover:text-primary transition-colors">
+                        <i class="fas fa-user-circle text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Enhanced main content area with better spacing and layout -->
-    <main class="flex-1 py-8 lg:py-12">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Improved header section with better typography -->
-            <header class="text-center mb-12">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-blue-600 text-white mb-6 shadow-lg">
-                    <i class="fas fa-check text-3xl"></i>
-                </div>
-                <h1 class="text-4xl lg:text-5xl font-bold text-accent mb-4 text-balance">Your Application Materials</h1>
-                <p class="text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
-                    Tailored cover letter and email generated based on your resume and the job description.
-                </p>
-            </header>
+    <!-- Main content with new layout -->
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <!-- Success indicator and title -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-primary to-secondary rounded-full mb-8 shadow-2xl">
+                <i class="fas fa-sparkles text-white text-2xl"></i>
+            </div>
+            <h1 class="text-5xl font-bold text-accent mb-4 text-balance">Materials Ready!</h1>
+            <p class="text-xl text-neutral/80 max-w-2xl mx-auto leading-relaxed">
+                Your personalized cover letter and email have been crafted to perfection.
+            </p>
+        </div>
 
-            <!-- Enhanced content cards with better styling -->
-            <div class="space-y-8">
-                <!-- Cover Letter Section -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+        <!-- Content grid layout -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <!-- Cover Letter Card -->
+            <div class="group">
+                <div class="bg-white rounded-3xl shadow-xl border border-emerald-100 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-r from-primary to-secondary p-6">
                         <div class="flex items-center justify-between">
-                            <h2 class="text-2xl font-bold text-accent flex items-center">
-                                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center mr-3">
-                                    <i class="fas fa-file-alt text-white"></i>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-file-text text-white text-xl"></i>
                                 </div>
-                                Cover Letter
-                            </h2>
-                            <button onclick="copyText('cover-letter')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center text-sm font-medium">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-white">Cover Letter</h2>
+                                    <p class="text-emerald-100 text-sm">Professional & Tailored</p>
+                                </div>
+                            </div>
+                            <button onclick="copyText('cover-letter')" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-xl transition-colors flex items-center text-sm font-medium backdrop-blur-sm">
                                 <i class="fas fa-copy mr-2"></i> Copy
                             </button>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div id="cover-letter" class="bg-slate-50 border-l-4 border-primary p-6 rounded-lg whitespace-pre-wrap text-slate-700 leading-relaxed">{{ cover_letter }}</div>
-                    </div>
-                </div>
-
-                <!-- Email Section -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-2xl font-bold text-accent flex items-center">
-                                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center mr-3">
-                                    <i class="fas fa-envelope text-white"></i>
-                                </div>
-                                Email
-                            </h2>
-                            <button onclick="copyText('email')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center text-sm font-medium">
-                                <i class="fas fa-copy mr-2"></i> Copy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div id="email" class="bg-slate-50 border-l-4 border-primary p-6 rounded-lg whitespace-pre-wrap text-slate-700 leading-relaxed">{{ email_text }}</div>
+                    <div class="p-8">
+                        <div id="cover-letter" class="bg-emerald-50/50 border border-emerald-100 p-6 rounded-2xl whitespace-pre-wrap text-neutral leading-relaxed text-sm max-h-96 overflow-y-auto">{{ cover_letter }}</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced action buttons with better mobile layout -->
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-12">
-                <a href="/" class="flex-1 sm:flex-none sm:min-w-48">
-                    <button class="w-full bg-white border-2 border-slate-300 text-accent py-3 px-8 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 flex items-center justify-center shadow-sm">
-                        <i class="fas fa-arrow-left mr-3"></i>
-                        Create Another
-                    </button>
-                </a>
-                <button onclick="copyAll()" class="flex-1 sm:flex-none sm:min-w-48 bg-primary text-white py-3 px-8 rounded-xl font-semibold hover:bg-blue-600 transition-all duration-200 flex items-center justify-center shadow-lg">
-                    <i class="fas fa-clipboard mr-3"></i>
-                    Copy All to Clipboard
+            <!-- Email Card -->
+            <div class="group">
+                <div class="bg-white rounded-3xl shadow-xl border border-emerald-100 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="bg-gradient-to-r from-secondary to-teal-500 p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-paper-plane text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-2xl font-bold text-white">Email</h2>
+                                    <p class="text-teal-100 text-sm">Ready to Send</p>
+                                </div>
+                            </div>
+                            <button onclick="copyText('email')" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-xl transition-colors flex items-center text-sm font-medium backdrop-blur-sm">
+                                <i class="fas fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div id="email" class="bg-teal-50/50 border border-teal-100 p-6 rounded-2xl whitespace-pre-wrap text-neutral leading-relaxed text-sm max-h-96 overflow-y-auto">{{ email_text }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons with new styling -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <a href="/" class="group">
+                <button class="bg-white border-2 border-emerald-200 text-neutral py-4 px-8 rounded-2xl font-semibold hover:bg-emerald-50 hover:border-primary transition-all duration-200 flex items-center shadow-lg group-hover:shadow-xl group-hover:-translate-y-0.5">
+                    <i class="fas fa-plus mr-3 text-primary"></i>
+                    Create Another
                 </button>
+            </a>
+            <button onclick="copyAll()" class="group bg-gradient-to-r from-primary to-secondary text-white py-4 px-8 rounded-2xl font-semibold hover:from-secondary hover:to-primary transition-all duration-200 flex items-center shadow-xl group-hover:shadow-2xl group-hover:-translate-y-0.5">
+                <i class="fas fa-clipboard-check mr-3"></i>
+                Copy Everything
+            </button>
+        </div>
+
+        <!-- Stats or additional info -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            <div class="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-emerald-100">
+                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-clock text-primary text-lg"></i>
+                </div>
+                <h3 class="font-semibold text-accent mb-1">Generated in</h3>
+                <p class="text-neutral/70 text-sm">Under 30 seconds</p>
+            </div>
+            <div class="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-emerald-100">
+                <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-target text-secondary text-lg"></i>
+                </div>
+                <h3 class="font-semibold text-accent mb-1">Tailored Match</h3>
+                <p class="text-neutral/70 text-sm">Job-specific content</p>
+            </div>
+            <div class="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-emerald-100">
+                <div class="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-shield-check text-teal-600 text-lg"></i>
+                </div>
+                <h3 class="font-semibold text-accent mb-1">ATS Optimized</h3>
+                <p class="text-neutral/70 text-sm">Recruiter-friendly</p>
             </div>
         </div>
     </main>
 
-    <!-- Added comprehensive professional footer -->
-    <footer class="bg-white border-t border-slate-200 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <i class="fas fa-briefcase text-white text-sm"></i>
-                        </div>
-                        <span class="ml-3 text-xl font-bold text-accent">JobCraft</span>
-                    </div>
-                    <p class="text-secondary leading-relaxed max-w-md">
-                        Empowering job seekers with AI-powered application materials that stand out and get results.
-                    </p>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="#" class="text-secondary hover:text-primary transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="text-secondary hover:text-primary transition-colors">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-secondary hover:text-primary transition-colors">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-accent mb-4">Product</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Features</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Templates</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Pricing</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">API</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-accent mb-4">Support</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Help Center</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Contact Us</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-secondary hover:text-accent transition-colors">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-slate-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-                <p class="text-secondary text-sm">© 2024 JobCraft. All rights reserved.</p>
-                <p class="text-secondary text-sm mt-2 sm:mt-0">Made with ❤️ for job seekers worldwide</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Floating action button for mobile -->
+    <div class="fixed bottom-6 right-6 md:hidden">
+        <button onclick="copyAll()" class="w-14 h-14 bg-gradient-to-r from-primary to-secondary text-white rounded-full shadow-2xl flex items-center justify-center hover:shadow-3xl transition-all duration-200">
+            <i class="fas fa-clipboard text-lg"></i>
+        </button>
+    </div>
 
-    <!-- Enhanced toast notification styling -->
+    <!-- Enhanced JavaScript with same functionality -->
     <script>
         function copyText(elementId) {
             const text = document.getElementById(elementId).innerText;
@@ -208,10 +200,10 @@
 
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
-            const bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+            const bgColor = type === 'success' ? 'bg-gradient-to-r from-primary to-secondary' : 'bg-gradient-to-r from-red-500 to-red-600';
             const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
             
-            toast.className = `fixed bottom-6 right-6 ${bgColor} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center z-50 transform translate-y-0 opacity-100 transition-all duration-300`;
+            toast.className = `fixed bottom-6 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center z-50 opacity-100 transition-all duration-500 backdrop-blur-sm`;
             toast.innerHTML = `
                 <i class="fas ${icon} mr-3 text-lg"></i>
                 <span class="font-medium">${message}</span>
@@ -219,16 +211,34 @@
             
             document.body.appendChild(toast);
             
+            // Animate in
             setTimeout(() => {
-                toast.style.transform = 'translateY(100%)';
+                toast.style.transform = 'translateX(-50%) translateY(-10px)';
+            }, 100);
+            
+            setTimeout(() => {
                 toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
                 setTimeout(() => {
                     if (document.body.contains(toast)) {
                         document.body.removeChild(toast);
                     }
-                }, 300);
+                }, 500);
             }, 3000);
         }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.group');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
     </script>
 </body>
 </html>

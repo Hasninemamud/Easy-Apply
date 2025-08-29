@@ -11,3 +11,7 @@ class Config:
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
     API_URL = "https://openrouter.ai/api/v1/chat/completions"
     MODEL = "openai/gpt-oss-20b:free"
+    
+    # API retry configuration
+    API_MAX_RETRIES = 3
+    API_BASE_DELAY = 2  # Base delay in seconds for exponential backoff

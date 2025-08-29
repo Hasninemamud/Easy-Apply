@@ -1,5 +1,6 @@
 import os
 import re
+import time
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import requests
 import PyPDF2
@@ -50,6 +51,40 @@ def clean_text(text):
     """Clean and normalize text"""
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
+
+def make_api_request_with_retry(payload, max_retries=3, base_delay=1):
+    """Make API request with exponential backoff retry for rate limits"""
+    headers = {
+        "Authorization": f"Bearer {app.config['OPENROUTER_API_KEY']}",
+        "Content-Type": "application/json"
+    }
+    
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(app.config['API_URL'], json=payload, headers=headers)
+            
+            if response.status_code == 429:  # Rate limited
+                if attempt < max_retries - 1:  # Don't sleep on last attempt
+                    wait_time = base_delay * (2 ** attempt)  # Exponential backoff
+                    print(f"Rate limited. Waiting {wait_time} seconds before retry {attempt + 1}/{max_retries}...")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    return None, "Rate limit exceeded. Please try again in a few minutes."
+            
+            response.raise_for_status()
+            return response.json(), None
+            
+        except requests.exceptions.RequestException as e:
+            if attempt < max_retries - 1:
+                wait_time = base_delay * (2 ** attempt)
+                print(f"API request failed: {e}. Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+                continue
+            else:
+                return None, f"API request failed after {max_retries} attempts: {str(e)}"
+    
+    return None, "Maximum retry attempts exceeded"
 
 def extract_job_description_from_url(url):
     """Extract job description from LinkedIn job URL"""
@@ -119,15 +154,16 @@ def generate_cover_letter(resume_text, job_description):
         ]
     }
     
-    headers = {
-        "Authorization": f"Bearer {app.config['OPENROUTER_API_KEY']}",
-        "Content-Type": "application/json"
-    }
+    result, error = make_api_request_with_retry(payload)
+    
+    if error:
+        print(f"Error generating cover letter: {error}")
+        return f"Error generating cover letter: {error}"
+    
+    if not result:
+        return "Error generating cover letter. Please try again."
     
     try:
-        response = requests.post(app.config['API_URL'], json=payload, headers=headers)
-        response.raise_for_status()
-        result = response.json()
         content = result['choices'][0]['message']['content'].strip()
         
         # Clean up any extra text that might be included
@@ -172,8 +208,8 @@ def generate_cover_letter(resume_text, job_description):
             
         return content
     except Exception as e:
-        print(f"Error generating cover letter: {e}")
-        return "Error generating cover letter. Please try again."
+        print(f"Error processing cover letter response: {e}")
+        return "Error processing cover letter. Please try again."
 
 def generate_email(cover_letter, tone):
     """Generate an email with the specified tone"""

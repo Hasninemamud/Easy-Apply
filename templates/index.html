@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyApply - AI Job Application Assistant</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -14,29 +19,33 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'sans': ['Poppins', 'system-ui', 'sans-serif'],
                     },
                     colors: {
                         primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a'
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b'
                         },
-                        secondary: '#64748b',
+                        secondary: '#6b7280',
                         accent: '#f59e0b',
+                        surface: '#f8fafc',
+                        'surface-dark': '#1e293b',
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out',
-                        'slide-up': 'slideUp 0.4s ease-out',
-                        'bounce-gentle': 'bounceGentle 0.8s ease-in-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 1s ease-in-out',
                         'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
                     },
                     boxShadow: {
-                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-                        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.08)',
+                        'medium': '0 8px 30px -4px rgba(0, 0, 0, 0.12)',
+                        'large': '0 20px 40px -8px rgba(0, 0, 0, 0.15)',
                     }
                 }
             }
@@ -45,56 +54,79 @@
     
     <style>
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
+            from { transform: translateY(40px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         @keyframes bounceGentle {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
         @keyframes pulseSoft {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
         .drag-over {
-            background-color: #eff6ff !important;
-            border-color: #3b82f6 !important;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%) !important;
+            border-color: #10b981 !important;
             transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(98, 152, 238, 0.25);
+            box-shadow: 0 20px 40px -8px rgba(16, 185, 129, 0.25);
         }
         
         .dark .drag-over {
-            background-color:rgb(29, 31, 36) !important;
-            border-color: #60a5fa !important;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%) !important;
+            border-color: #34d399 !important;
         }
         
-        .gradient-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, #10b981 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #059669 0%, transparent 50%);
+            background-size: 100px 100px;
+            opacity: 0.1;
         }
         
-        .dark .gradient-hero {
-            background: linear-gradient(135deg,rgb(105, 117, 148) 0%, #3730a3 100%);
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .dark .glass-effect {
-            background: rgba(39, 40, 41, 0.9);
+        .step-connector {
+            background: linear-gradient(90deg, #e5e7eb 0%, #10b981 50%, #e5e7eb 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            transition: background-position 0.8s ease;
+        }
+        
+        .step-connector.active {
+            background-position: 0% 0;
+        }
+        
+        .dark .step-connector {
+            background: linear-gradient(90deg, #374151 0%, #10b981 50%, #374151 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
         }
         
         /* Mobile menu animation */
         .mobile-menu {
             transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .mobile-menu.open {
@@ -103,7 +135,7 @@
         
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -111,255 +143,353 @@
         }
         
         .dark ::-webkit-scrollbar-track {
-            background:rgb(13, 15, 19);
+            background: #0f172a;
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+            background: #10b981;
+            border-radius: 4px;
         }
         
         .dark ::-webkit-scrollbar-thumb {
-            background: #475569;
+            background: #059669;
+        }
+        
+        /* Floating elements */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-shape:nth-child(2) {
+            animation-delay: -2s;
+        }
+        
+        .floating-shape:nth-child(3) {
+            animation-delay: -4s;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+<body class="bg-surface dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    
+    <!-- Floating background shapes -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="floating-shape w-64 h-64 -top-32 -left-32"></div>
+        <div class="floating-shape w-48 h-48 top-1/3 -right-24"></div>
+        <div class="floating-shape w-32 h-32 bottom-1/4 left-1/4"></div>
+    </div>
       
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-card shadow-soft">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
                   
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-robot text-white text-sm"></i>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-medium">
+                        <i class="fas fa-magic text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-                        EasyApply
-                    </span>
+                    <div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+                            EasyApply
+                        </span>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">AI Assistant</div>
+                    </div>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Features</a>
-                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">How it Works</a>
-                    <a href="#pricing" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Pricing</a>
+                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium">Process</a>
+                    <a href="#pricing" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium">Pricing</a>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-sun text-yellow-500 dark:hidden"></i>
+                <div class="flex items-center space-x-3">
+                    <button id="theme-toggle" class="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-sun text-amber-500 dark:hidden"></i>
                         <i class="fas fa-moon text-blue-400 hidden dark:block"></i>
                     </button>
 
-                    <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <button id="mobile-menu-toggle" class="md:hidden p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300">
                         <i class="fas fa-bars"></i>
                     </button>
 
-                    <a href="#app" class="hidden md:inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-medium">
+                    <a href="#app" class="hidden md:inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-xl transition-all duration-300 font-semibold shadow-medium hover:shadow-large transform hover:scale-105">
                         Get Started
+                        <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="mobile-menu fixed top-16 right-0 bottom-0 w-64 bg-white dark:bg-slate-800 border-l border-gray-200 dark:border-gray-700 md:hidden">
-            <div class="p-6 space-y-6">
-                <a href="#features" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Features</a>
-                <a href="#how-it-works" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">How it Works</a>
-                <a href="#pricing" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Pricing</a>
-                <a href="#app" class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-medium w-full justify-center">
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-20 right-0 bottom-0 w-80 glass-card border-l border-gray-200 dark:border-gray-700 md:hidden">
+            <div class="p-8 space-y-8">
+                <a href="#features" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium text-lg">Features</a>
+                <a href="#how-it-works" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium text-lg">Process</a>
+                <a href="#pricing" class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium text-lg">Pricing</a>
+                <a href="#app" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl transition-all font-semibold w-full justify-center">
                     Get Started
+                    <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
         </div>
     </nav>
 
-    <section class="pt-24 pb-16 gradient-hero relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/10"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 relative overflow-hidden">
+        <div class="hero-pattern absolute inset-0"></div>
+        <div class="relative max-w-6xl mx-auto px-6 lg:px-8 text-center">
             <div class="animate-fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                    EasyApply Assistant
+                <div class="inline-flex items-center px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-semibold mb-8 border border-primary-200 dark:border-primary-800">
+                    <i class="fas fa-sparkles mr-2"></i>
+                    AI-Powered Job Applications
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                    <span class="bg-gradient-to-r from-gray-900 via-primary-600 to-primary-700 dark:from-gray-100 dark:via-primary-400 dark:to-primary-300 bg-clip-text text-transparent">
+                        Land Your Dream Job
+                    </span>
+                    <br>
+                    <span class="text-gray-700 dark:text-gray-300">Effortlessly</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    Upload your resume and provide the job description to generate a tailored cover letter and email in minutes.
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-4xl mx-auto leading-relaxed">
+                    Transform your resume and job descriptions into personalized cover letters and professional emails in seconds with our AI assistant.
                 </p>
-                <a href="#app" class="inline-flex items-center px-8 py-4 bg-white text-primary-600 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-all transform hover:scale-105 shadow-soft">
-                    Start Creating
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 bg-white dark:bg-slate-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0">
-                 
-                <div class="flex items-center space-x-4 animate-slide-up">
-                    <div id="step1" class="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-medium">
-                        1
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg">Resume</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Upload your CV</p>
-                    </div>
-                </div>
-
-                 
-                <div id="progress1" class="hidden md:block w-24 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-
-                 
-                <div class="flex items-center space-x-4 animate-slide-up" style="animation-delay: 0.1s">
-                    <div id="step2" class="w-12 h-12 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center font-bold text-lg">
-                        2
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg">Job Info</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Add job details</p>
-                    </div>
-                </div>
-
-                <div id="progress2" class="hidden md:block w-24 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-
-                <div class="flex items-center space-x-4 animate-slide-up" style="animation-delay: 0.2s">
-                    <div id="step3" class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-medium">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg">Tone</h3>
-                        <p class="text-gray-600 dark:text-gray-400">Choose style</p>
-                    </div>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#app" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-large">
+                        <i class="fas fa-rocket mr-3"></i>
+                        Start Creating Now
+                    </a>
+                    <a href="#how-it-works" class="inline-flex items-center px-8 py-4 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-2xl font-semibold text-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-300 shadow-soft border border-gray-200 dark:border-gray-700">
+                        <i class="fas fa-play mr-3"></i>
+                        See How It Works
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="app" class="py-16 bg-gray-50 dark:bg-slate-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Progress Steps -->
+    <section class="py-16 bg-white dark:bg-slate-800 relative">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple 3-Step Process</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">Get professional application materials in minutes</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0 lg:space-x-8">
+                 
+                <div class="flex flex-col items-center text-center animate-slide-up">
+                    <div class="relative">
+                        <div id="step1" class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-3xl flex items-center justify-center font-bold text-2xl shadow-large mb-6 transition-all duration-500">
+                            1
+                        </div>
+                        <div class="absolute -inset-2 bg-primary-100 dark:bg-primary-900/30 rounded-3xl -z-10 animate-pulse-soft"></div>
+                    </div>
+                    <div class="max-w-xs">
+                        <h3 class="font-bold text-xl mb-3">Upload Resume</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Drop your CV and let our AI analyze your skills and experience</p>
+                    </div>
+                </div>
+
+                 
+                <div class="hidden lg:block flex-1 h-1 step-connector rounded-full" id="progress1"></div>
+
+                 
+                <div class="flex flex-col items-center text-center animate-slide-up" style="animation-delay: 0.2s">
+                    <div class="relative">
+                        <div id="step2" class="w-20 h-20 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-3xl flex items-center justify-center font-bold text-2xl shadow-medium mb-6 transition-all duration-500">
+                            2
+                        </div>
+                    </div>
+                    <div class="max-w-xs">
+                        <h3 class="font-bold text-xl mb-3">Add Job Details</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Paste the job description or provide the job posting URL</p>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block flex-1 h-1 step-connector rounded-full" id="progress2"></div>
+
+                <div class="flex flex-col items-center text-center animate-slide-up" style="animation-delay: 0.4s">
+                    <div class="relative">
+                        <div id="step3" class="w-20 h-20 bg-amber-500 text-white rounded-3xl flex items-center justify-center font-bold text-2xl shadow-large mb-6 transition-all duration-500">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="absolute -inset-2 bg-amber-100 dark:bg-amber-900/30 rounded-3xl -z-10 animate-pulse-soft"></div>
+                    </div>
+                    <div class="max-w-xs">
+                        <h3 class="font-bold text-xl mb-3">Choose Tone</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Select your preferred communication style and voice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Application Form -->
+    <section id="app" class="py-20 bg-gradient-to-br from-surface via-primary-50/30 to-surface dark:from-slate-900 dark:via-primary-900/10 dark:to-slate-900 relative">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl animate-slide-up">
-                    {{ message }}
+                <div class="mb-8 p-6 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 text-red-700 dark:text-red-300 rounded-2xl animate-slide-up shadow-soft">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-3"></i>
+                        {{ message }}
+                    </div>
                 </div>
                 {% endfor %}
             {% endif %}
             {% endwith %}
 
-            <form method="POST" enctype="multipart/form-data" class="space-y-8">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-soft animate-fade-in">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i class="fas fa-file-upload text-primary-600 mr-3"></i>
-                        Upload Your Resume
-                    </h2>
+            <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" class="space-y-8">
+                <!-- Resume Upload -->
+                <div class="glass-card rounded-3xl p-8 md:p-10 shadow-large animate-fade-in">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-4">
+                            <i class="fas fa-file-upload text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold">Upload Your Resume</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Let's start with your professional background</p>
+                        </div>
+                    </div>
                     
-                    <div id="drop-zone" class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center cursor-pointer hover:border-primary-500 dark:hover:border-primary-400 transition-all duration-300 bg-gray-50 dark:bg-slate-700/50">
-                        <div class="space-y-4">
-                            <i id="upload-icon" class="fas fa-cloud-upload-alt text-4xl text-gray-400 dark:text-gray-500"></i>
+                    <div id="drop-zone" class="border-3 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-12 text-center cursor-pointer hover:border-primary-400 dark:hover:border-primary-500 transition-all duration-300 bg-gradient-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-700 group">
+                        <div class="space-y-6">
+                            <div class="relative">
+                                <i id="upload-icon" class="fas fa-cloud-upload-alt text-6xl text-gray-400 dark:text-gray-500 group-hover:text-primary-500 transition-colors duration-300"></i>
+                                <div class="absolute -inset-4 bg-primary-100 dark:bg-primary-900/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                            </div>
                             <div>
-                                <p class="text-lg font-medium text-gray-700 dark:text-gray-300">
-                                    Drag and drop your resume here or 
-                                    <span class="text-primary-600 dark:text-primary-400 font-semibold">Browse Files</span>
+                                <p class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Drag and drop your resume here
                                 </p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                                    Supported formats: PDF, DOCX (Max 16MB)
+                                <p class="text-lg text-primary-600 dark:text-primary-400 font-medium mb-4">
+                                    or click to browse files
+                                </p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    Supported formats: PDF, DOCX • Maximum size: 16MB
                                 </p>
                             </div>
                         </div>
                         <input type="file" id="resume" name="resume" accept=".pdf,.docx" class="hidden" required>
                     </div>
                     
-                    <div id="file-name" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
+                    <div id="file-name" class="hidden mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border border-green-200 dark:border-green-800 rounded-2xl">
                         <div class="flex items-center">
-                            <i class="fas fa-file-alt text-green-600 dark:text-green-400 mr-3"></i>
-                            <span class="font-medium text-green-800 dark:text-green-300">Selected: </span>
-                            <span id="file-name-text" class="text-green-700 dark:text-green-400 ml-1"></span>
+                            <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-green-800 dark:text-green-300">File uploaded successfully!</p>
+                                <p id="file-name-text" class="text-green-700 dark:text-green-400 text-sm"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-soft animate-fade-in" style="animation-delay: 0.1s">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i class="fas fa-briefcase text-primary-600 mr-3"></i>
-                        Job Description
-                    </h2>
+                <!-- Job Description -->
+                <div class="glass-card rounded-3xl p-8 md:p-10 shadow-large animate-fade-in" style="animation-delay: 0.1s">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
+                            <i class="fas fa-briefcase text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold">Job Information</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Tell us about the position you're applying for</p>
+                        </div>
+                    </div>
                     
-                    <div class="flex border-b border-gray-200 dark:border-gray-700 mb-6">
-                        <button type="button" id="paste-tab-btn" class="tab-btn px-6 py-3 font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="paste">
-                            <i class="fas fa-paste mr-2"></i>
+                    <div class="flex border-b border-gray-200 dark:border-gray-700 mb-8">
+                        <button type="button" id="paste-tab-btn" class="tab-btn px-8 py-4 font-semibold border-b-3 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 rounded-t-xl" data-tab="paste">
+                            <i class="fas fa-paste mr-3"></i>
                             Paste Description
                         </button>
-                        <button type="button" id="url-tab-btn" class="tab-btn px-6 py-3 font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="url">
-                            <i class="fas fa-link mr-2"></i>
+                        <button type="button" id="url-tab-btn" class="tab-btn px-8 py-4 font-semibold border-b-3 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 rounded-t-xl" data-tab="url">
+                            <i class="fas fa-link mr-3"></i>
                             Job URL
                         </button>
                     </div>
 
                     
                     <div id="paste-tab" class="tab-content">
-                        <textarea id="job_description" name="job_description" rows="8" 
-                                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-gray-100 resize-none transition-all"
-                                  placeholder="Paste the complete job description here..."></textarea>
-                        <div class="flex justify-between items-center mt-3">
-                            <span id="char-count" class="text-sm text-gray-500 dark:text-gray-400">0 characters</span>
-                            <span class="text-xs text-gray-400 dark:text-gray-500">Minimum 50 characters required</span>
+                        <textarea id="job_description" name="job_description" rows="10" 
+                                  class="w-full p-6 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 resize-none transition-all duration-300 text-lg"
+                                  placeholder="Paste the complete job description here. Include requirements, responsibilities, and company information for the best results..."></textarea>
+                        <div class="flex justify-between items-center mt-4">
+                            <span id="char-count" class="text-sm font-medium text-gray-500 dark:text-gray-400">0 characters</span>
+                            <span class="text-sm text-gray-400 dark:text-gray-500">Minimum 50 characters required</span>
                         </div>
                     </div>
 
                     <div id="url-tab" class="tab-content hidden">
                         <input type="url" id="job_url" name="job_url" 
-                               class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-gray-100 transition-all"
-                               placeholder="https://example.com/job-posting">
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3 flex items-center">
-                            <i class="fas fa-info-circle mr-2"></i>
-                            We'll automatically extract the job description from this URL
-                        </p>
+                               class="w-full p-6 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 transition-all duration-300 text-lg"
+                               placeholder="https://company.com/careers/job-posting">
+                        <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-xl">
+                            <p class="text-sm text-blue-700 dark:text-blue-300 flex items-center">
+                                <i class="fas fa-info-circle mr-3"></i>
+                                We'll automatically extract and analyze the job description from this URL
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-soft animate-fade-in" style="animation-delay: 0.2s">
-                    <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i class="fas fa-palette text-primary-600 mr-3"></i>
-                        Email Tone
-                    </h2>
+                <!-- Email Tone Selection -->
+                <div class="glass-card rounded-3xl p-8 md:p-10 shadow-large animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mr-4">
+                            <i class="fas fa-palette text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold">Communication Style</h2>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Choose the tone that best represents you</p>
+                        </div>
+                    </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                           
-                        <label class="tone-option cursor-pointer">
+                        <label class="tone-option cursor-pointer group">
                             <input type="radio" name="email_tone" value="formal" class="sr-only" checked>
-                            <div class="tone-card p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-user-tie text-2xl text-primary-600 mr-3"></i>
-                                    <h3 class="font-semibold text-lg">Formal</h3>
+                            <div class="tone-card p-8 border-2 border-gray-200 dark:border-gray-600 rounded-2xl hover:border-primary-400 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium group-hover:scale-105 bg-white dark:bg-slate-800">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-user-tie text-2xl text-white"></i>
+                                    </div>
+                                    <h3 class="font-bold text-xl mb-3">Professional</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Polished and business-appropriate tone</p>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-400">Professional and polished</p>
                             </div>
                         </label>
 
                         
-                        <label class="tone-option cursor-pointer">
+                        <label class="tone-option cursor-pointer group">
                             <input type="radio" name="email_tone" value="enthusiastic" class="sr-only">
-                            <div class="tone-card p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-star text-2xl text-accent mr-3"></i>
-                                    <h3 class="font-semibold text-lg">Enthusiastic</h3>
+                            <div class="tone-card p-8 border-2 border-gray-200 dark:border-gray-600 rounded-2xl hover:border-primary-400 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium group-hover:scale-105 bg-white dark:bg-slate-800">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-star text-2xl text-white"></i>
+                                    </div>
+                                    <h3 class="font-bold text-xl mb-3">Enthusiastic</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Energetic and passionate approach</p>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-400">Energetic and passionate</p>
                             </div>
                         </label>
 
                         
-                        <label class="tone-option cursor-pointer">
+                        <label class="tone-option cursor-pointer group">
                             <input type="radio" name="email_tone" value="direct" class="sr-only">
-                            <div class="tone-card p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium">
-                                <div class="flex items-center mb-3">
-                                    <i class="fas fa-bolt text-2xl text-red-500 mr-3"></i>
-                                    <h3 class="font-semibold text-lg">Short & Direct</h3>
+                            <div class="tone-card p-8 border-2 border-gray-200 dark:border-gray-600 rounded-2xl hover:border-primary-400 dark:hover:border-primary-500 transition-all duration-300 hover:shadow-medium group-hover:scale-105 bg-white dark:bg-slate-800">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-bolt text-2xl text-white"></i>
+                                    </div>
+                                    <h3 class="font-bold text-xl mb-3">Direct</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Concise and straight to the point</p>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-400">Concise and to the point</p>
                             </div>
                         </label>
                     </div>
@@ -368,21 +498,35 @@
                  
                 <div class="text-center animate-fade-in" style="animation-delay: 0.3s">
                     <button type="submit" id="submit-btn" disabled 
-                            class="px-8 py-4 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold text-lg rounded-xl transition-all duration-300 transform hover:scale-105 shadow-medium opacity-50 cursor-not-allowed">
-                        <i class="fas fa-magic mr-2"></i>
+                            class="px-12 py-6 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold text-xl rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-large disabled:shadow-none disabled:scale-100 opacity-50 cursor-not-allowed">
+                        <i class="fas fa-magic mr-3"></i>
                         <span id="submit-text">Complete All Steps First</span>
                     </button>
+                    <p class="text-gray-500 dark:text-gray-400 mt-4 text-lg">Generate your personalized application materials</p>
                 </div>
             </form>
         </div>
     </section>
 
      
-    <footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-gray-700 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-600 dark:text-gray-400">
-                © 2024 EasyApply Assistant. All rights reserved.
-            </p>
+    <footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-gray-700 py-12">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-magic text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+                            EasyApply
+                        </span>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">AI Assistant</div>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 font-medium">
+                    © 2024 EasyApply Assistant. Crafted with ❤️ for job seekers.
+                </p>
+            </div>
         </div>
     </footer>
 
@@ -443,27 +587,25 @@
 
             // Update step 1
             if (completedSteps.resume) {
-                step1.classList.add('bg-green-500');
-                step1.classList.remove('bg-primary-600');
-                step1.innerHTML = '<i class="fas fa-check"></i>';
-                progress1.classList.add('bg-green-500');
-                progress1.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+                step1.classList.add('bg-gradient-to-br', 'from-green-500', 'to-green-600');
+                step1.classList.remove('bg-gradient-to-br', 'from-primary-500', 'to-primary-600');
+                step1.innerHTML = '<i class="fas fa-check text-2xl"></i>';
+                progress1.classList.add('active');
             }
 
             // Update step 2
             if (completedSteps.jobInfo) {
-                step2.classList.add('bg-green-500', 'text-white');
-                step2.classList.remove('bg-gray-300', 'text-gray-500', 'dark:bg-gray-600', 'dark:text-gray-400');
-                step2.innerHTML = '<i class="fas fa-check"></i>';
-                progress2.classList.add('bg-green-500');
-                progress2.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+                step2.classList.add('bg-gradient-to-br', 'from-green-500', 'to-green-600', 'text-white', 'shadow-large');
+                step2.classList.remove('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400', 'shadow-medium');
+                step2.innerHTML = '<i class="fas fa-check text-2xl"></i>';
+                progress2.classList.add('active');
             }
 
             // Update step 3
             if (completedSteps.tone) {
-                step3.classList.add('bg-green-500', 'text-white');
-                step3.classList.remove('bg-gray-300', 'text-gray-500', 'dark:bg-gray-600', 'dark:text-gray-400');
-                step3.innerHTML = '<i class="fas fa-check"></i>';
+                step3.classList.add('bg-gradient-to-br', 'from-green-500', 'to-green-600');
+                step3.classList.remove('bg-amber-500');
+                step3.innerHTML = '<i class="fas fa-check text-2xl"></i>';
             }
 
             // Update submit button
@@ -549,10 +691,10 @@
 
                 // Update button states
                 tabButtons.forEach(btn => {
-                    btn.classList.remove('active', 'border-primary-600', 'text-primary-600');
+                    btn.classList.remove('active', 'border-primary-600', 'text-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30');
                     btn.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-300', 'hover:border-gray-300', 'dark:hover:border-gray-600');
                 });
-                button.classList.add('active', 'border-primary-600', 'text-primary-600');
+                button.classList.add('active', 'border-primary-600', 'text-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30');
                 button.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-300', 'hover:border-gray-300', 'dark:hover:border-gray-600');
 
                 // Update content visibility
@@ -564,7 +706,7 @@
         });
 
         // Set initial active tab
-        document.getElementById('paste-tab-btn').classList.add('border-primary-600', 'text-primary-600');
+        document.getElementById('paste-tab-btn').classList.add('border-primary-600', 'text-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30');
         document.getElementById('paste-tab-btn').classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
 
         // Job description character counter and validation
@@ -590,12 +732,12 @@
             option.addEventListener('click', function() {
                 toneOptions.forEach(opt => {
                     const card = opt.querySelector('.tone-card');
-                    card.classList.remove('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'shadow-medium');
+                    card.classList.remove('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'shadow-large', 'scale-105');
                     card.classList.add('border-gray-200', 'dark:border-gray-600');
                 });
 
                 const card = this.querySelector('.tone-card');
-                card.classList.add('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'shadow-medium');
+                card.classList.add('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'shadow-large', 'scale-105');
                 card.classList.remove('border-gray-200', 'dark:border-gray-600');
 
                 completedSteps.tone = true;
@@ -604,7 +746,7 @@
         });
 
         // Set initial selected tone
-        document.querySelector('input[name="email_tone"]:checked').closest('.tone-option').querySelector('.tone-card').classList.add('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30');
+        document.querySelector('input[name="email_tone"]:checked').closest('.tone-option').querySelector('.tone-card').classList.add('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'shadow-large');
 
         // Initialize progress
         updateProgress();
